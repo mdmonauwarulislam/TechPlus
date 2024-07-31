@@ -9,7 +9,7 @@ function Header() {
     const path = useLocation().pathname;
   return (
     <Navbar className='border-b-2' >
-        <Link to= '/' className='self-center size-100 sm:size-max bg-gradient-to-r from-purple-700 via-blue-900 to-pink-600 rounded-se-full rounded-bl-full'>
+        <Link to= '/' className='self-center size-100 sm:size-max bg-gradient-to-r from-purple-700 via-blue-900 to-pink-600 rounded-se-full'>
         <img src= {Logo} alt=""  height={20} width={175}/>
         </Link>
         <form>
@@ -28,7 +28,7 @@ function Header() {
             <FaMoon/>
         </Button>
         <Link to='/signin'>
-            <Button gradientDuoTone='purpleToBlue'>
+            <Button gradientDuoTone='purpleToBlue' outline>
                 SignIn 
             </Button>
         </Link>
