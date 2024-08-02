@@ -3,20 +3,35 @@ const app = express();
 const mongoose = require("mongoose");
 const dotenv = require('dotenv');
 const userRouter = require('./routes/user.router');
+const authRouter = require('./routes/auth.route.js');
+const cors = require("cors");
 
 dotenv.config();
+app.use(express.json());
 
-mongoose.connect(process.env.MONGODB_URL)
-.then( () => {
-    console.log("MongoDb is connected successfully!!");
-})
-.catch((err) => {
-    console.log(err);
-});
+mongoose.connect(process.env.MONGODB_URL, )
+    .then(() => {
+        console.log('MongoDB connected');
+    })
+    .catch(err => {
+        console.error('MongoDB connection error:', err);
+    });
+
+app.use(
+    cors({
+      origin: "*",
+      methods: ["GET", "HEAD", "PUT", "PATCH", "POST", "DELETE"],
+      preflightContinue: false,
+      optionsSuccessStatus: 204,
+      credentials: true,
+    })
+  );
 
 app.use('/api/user', userRouter);
+app.use('/api/auth', authRouter);
 
 
-app.listen(3000, () => {
-    console.log("Server is running at PORT 3000 !")
-})
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`);
+});
