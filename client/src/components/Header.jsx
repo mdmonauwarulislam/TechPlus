@@ -8,12 +8,12 @@ import { FaMoon } from "react-icons/fa";
 function Header() {
     const path = useLocation().pathname;
   return (
-    <Navbar className='border-b-2' >
-        <Link to= '/' className='self-center size-100 sm:size-max bg-gradient-to-r from-purple-700 via-blue-900 to-pink-600 rounded-se-full'>
+    <Navbar className='border-b-2 border-purple-300' >
+        <Link to= '/' className='self-center size-100 sm:size-max bg-gradient-to-r from-purple-500 via-blue-500 to-pink-500 rounded-se-full'>
         <img src= {Logo} alt=""  height={20} width={175}/>
         </Link>
         <form>
-            <TextInput 
+            <TextInput
             type='text'
             placeholder='Search...'
             rightIcon={AiOutlineSearch}
