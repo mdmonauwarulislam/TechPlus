@@ -1,5 +1,5 @@
 import { Alert, Button, Label, Spinner, TextInput } from "flowbite-react";
-import signupimg from '../assets/images/signupp.png';
+import signupimg from '../assets/images/signin2.svg';
 import { Link, useNavigate } from 'react-router-dom';
 import { useState } from "react";
 
@@ -48,7 +48,7 @@ function SignUp() {
       <div className="flex p-2 max-w-3xl mx-auto flex-col md:flex-row md:items-center justify-evenly gap-20">
         {/* left */}
         <div className="flex-1 mt-20 flex justify-center items-center">
-          <img src={signupimg} alt="" className="w-auto h-auto max-h-100" />
+          <img src={signupimg} alt="" className="w-auto text-[400px]" />
         </div>
 
         {/* right */}
