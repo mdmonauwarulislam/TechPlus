@@ -56,7 +56,7 @@ const signin = async (req, res) => {
             });
         }
 
-        let isMatch = await bcryptjs.compare(password, user.password);
+        let isMatch = bcryptjs.compareSync(password, user.password);
         if (!isMatch) {
             return res.status(httpStatusCode.BAD_REQUEST).json({
                 success: false,

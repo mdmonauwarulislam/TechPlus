@@ -22,12 +22,13 @@ function SignUp() {
     try {
       setIsLoading(true);
       setErrorMessage(null);
+      
       const res = await fetch('/api/auth/signup', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData),
       });
-
+     
       const data = await res.json();
       if (data.success === false) {
         setIsLoading(false);
@@ -44,15 +45,15 @@ function SignUp() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-r from-pink-50 via-red-50 to-violet-50">
-      <div className="flex p-2 max-w-3xl mx-auto flex-col md:flex-row md:items-center justify-evenly gap-20">
+    <div className="min-h-screen pb-20 bg-gradient-to-r from-pink-50 via-red-50 to-violet-50">
+      <div className="flex flex-col max-w-3xl gap-20 p-2 mx-auto md:flex-row md:items-center justify-evenly">
         {/* left */}
-        <div className="flex-1 mt-20 flex justify-center items-center">
+        <div className="flex items-center justify-center flex-1 mt-20">
           <img src={signupimg} alt="" className="w-auto text-[400px]" />
         </div>
 
         {/* right */}
-        <div className="w-full flex-1 justify-center items-center md:mt-20 border-2 px-5 py-10 rounded-lg border-purple-400">
+        <div className="items-center justify-center flex-1 w-full px-5 py-10 border-2 border-purple-400 rounded-lg md:mt-20">
           <h1 className="text-3xl font-semibold text-purple-700">Sign Up</h1>
           <p className="text-[12px] font-normal text-purple-600 mb-5">
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Culpa porro consectetur quos amet.
@@ -70,7 +71,7 @@ function SignUp() {
               <Label htmlFor="password" value="Password" />
               <TextInput type="password" placeholder="Password" id="password" onChange={handleChange} />
             </div>
-            <Button className="mt-4 w-full" gradientDuoTone='purpleToPink' type="submit" disabled={isLoading}>
+            <Button className="w-full mt-4" gradientDuoTone='purpleToPink' type="submit" disabled={isLoading}>
               {isLoading ? (
                 <>
                   <Spinner size='sm' />
@@ -81,7 +82,7 @@ function SignUp() {
           </form>
           <div className="flex gap-2 mt-3 text-sm">
             <span>Have an account?</span>
-            <Link to='/signin' className=' text-blue-500'>Sign In</Link>
+            <Link to='/signin' className='text-blue-500 '>Sign In</Link>
           </div>
           {errorMessage && (
             <Alert className="mt-5" color='failure'>
