@@ -4,12 +4,14 @@ import { Alert, Button, Label, Spinner, TextInput } from "flowbite-react";
 import signupimg from '../assets/images/signin.svg';
 import { Link, useNavigate } from 'react-router-dom';
 import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { signinStart, signinSuccess, signinFailure } from "../redux/user/userSlice";
 
 function SignIn() {
   const [formData, setFormData] = useState({});
-  const [errorMessage, setErrorMessage] = useState(null);
-  const [isLoading, setIsLoading] = useState(false);
+  const {isLoading, error:errorMessage} = useSelector((state) => state.user);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.id]: e.target.value.trim() });
@@ -18,12 +20,11 @@ function SignIn() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!formData.email || !formData.password) {
-      return setErrorMessage('All fields are required to be filled!');
+        return dispatch(signinFailure('Please fill in all fields!'));
     }
 
     try {
-      setIsLoading(true);
-      setErrorMessage(null);
+      dispatch(signinStart());
       console.log("Submitting form with data:", formData);
       const res = await fetch('/api/auth/signin', {
         method: 'POST',
@@ -33,19 +34,16 @@ function SignIn() {
 
       const data = await res.json();
       if (data.success === false) {
-        setIsLoading(false);
-        return setErrorMessage('Something went wrong');
+       dispatch( signinFailure(data.message));
        
       }
-      console.log(data);
-      setIsLoading(false);
+      
       if (res.ok) {
+        dispatch(signinSuccess(data));
         navigate('/');
       }
     } catch (error) {
-      console.log(error); // Add this line to log the error message in the console
-      setErrorMessage('Something went wrong!');
-      setIsLoading(false);
+      dispatch(signinFailure(error.message));
     }
   };
 
