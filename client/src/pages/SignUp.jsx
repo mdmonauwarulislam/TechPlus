@@ -2,6 +2,7 @@ import { Alert, Button, Label, Spinner, TextInput } from "flowbite-react";
 import signupimg from '../assets/images/signin2.svg';
 import { Link, useNavigate } from 'react-router-dom';
 import { useState } from "react";
+import OAuth from "../components/OAuth";
 
 function SignUp() {
   const [formData, setFormData] = useState({});
@@ -22,6 +23,7 @@ function SignUp() {
     try {
       setIsLoading(true);
       setErrorMessage(null);
+      
       
       const res = await fetch('/api/auth/signup', {
         method: 'POST',
@@ -79,6 +81,7 @@ function SignUp() {
                 </>
               ) : 'Sign Up'}
             </Button>
+            <OAuth/>
           </form>
           <div className="flex gap-2 mt-3 text-sm">
             <span>Have an account?</span>
