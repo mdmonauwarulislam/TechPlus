@@ -88,5 +88,48 @@ const signin = async (req, res) => {
     }
 };
 
+const google = async (req, res) => {
+    try {
+        const { name, email, photoURL } = req.body;
+        let user = await User.findOne({ email });
+        
+        if (!user) {
+            const generatePassword = Math.random().toString(36).slice(-8);
+            const hashPassword = await bcryptjs.hash(generatePassword, 10);
+            const username = name.toLowerCase().split(" ").join("") + Math.random().toString(9).slice(-5);
+            user = await User.create({
+                username,
+                email,
+                password: hashPassword,
+                profilePic: photoURL,
+            });
+        }
+        
+        const token = await getToken(user);
+        res.cookie("token", token, { httpOnly: true });
+        return res.status(httpStatusCode.OK).json({
+            success: true,
+            message: "Successfully logged in!",
+            data: {
+                user: {
+                    id: user._id,
+                    username: user.username,
+                    email: user.email,
+                    profilePic: user.profilePic,
+                },
+                token,
+            },
+        });
+    } catch (error) {
+        console.error("Google login error:", error);
+        return res.status(httpStatusCode.INTERNAL_SERVER_ERROR).json({
+            success: false,
+            message: "Something went wrong!",
+            error: error.message,
+        });
+    }
+};
 
-module.exports = { signup, signin };
+
+
+module.exports = { signup, signin , google};

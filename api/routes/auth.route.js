@@ -1,5 +1,5 @@
 const express = require('express');
-const { signup, signin } = require('../controller/auth.controller.js');
+const { signup, signin, google } = require('../controller/auth.controller.js');
 const router = express.Router();
 const { check } = require('express-validator');
 const validateFields = require('../middleware/validation.middleware');
@@ -15,5 +15,7 @@ router.post('/signin', [
     check('email', 'Valid email is required').isEmail(),
     check('password', 'Password is required').notEmpty(),
 ], validateFields,  signin);
+
+router.post('/google', google);
 
 module.exports = router;
