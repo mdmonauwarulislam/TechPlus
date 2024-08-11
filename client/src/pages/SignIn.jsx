@@ -50,7 +50,7 @@ function SignIn() {
   };
 
   return (
-    <div className="pb-20 min-h-auto bg-gradient-to-r from-pink-50 via-red-50 to-violet-50">
+    <div className="pb-20 min-h-auto bg-gradient-to-r from-pink-50 via-red-50 to-violet-50 dark:bg-gradient-to-r dark:from-gray-800 dark:via-gray-900 dark:to-black">
       <div className="flex flex-col max-w-3xl gap-20 p-2 mx-auto md:flex-row md:items-center justify-evenly">
         {/* left */}
         <div className="flex items-center justify-center flex-1 mt-20">
@@ -58,9 +58,9 @@ function SignIn() {
         </div>
 
         {/* right */}
-        <div className="items-center justify-center flex-1 w-full px-5 py-10 border-2 border-purple-400 rounded-lg md:mt-20">
-          <h1 className="text-3xl font-semibold text-purple-700">Sign In</h1>
-          <p className="text-[12px] font-normal text-purple-600 mb-5">
+        <div className="items-center justify-center flex-1 w-full px-5 py-10 border-2 border-purple-400 rounded-lg dark:border-gray-100 md:mt-20">
+          <h1 className="text-3xl font-semibold text-purple-700 dark:text-gray-100">Sign In</h1>
+          <p className="text-[12px] font-normal text-purple-600 mb-5 dark:text-gray-100">
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Culpa porro consectetur quos amet.
           </p>
           <form onSubmit={handleSubmit}>
