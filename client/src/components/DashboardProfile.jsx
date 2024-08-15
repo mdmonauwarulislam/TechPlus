@@ -1,15 +1,24 @@
 import { Button, Label, TextInput } from 'flowbite-react';
+import { useState } from 'react';
 import {useSelector} from 'react-redux'
 
 function DashboardProfile() {
     const {currentUser} = useSelector((state) => state.user);
+    const [imageFile, SetImageFile] = useState(null);
+    const handleProfilePic = (e) => {
+        const file = e.target.files[0];
+        console.log(file);
+        
+    }
+
   return (
    <div className='w-full max-w-lg p-3 mx-auto '>
     <h1 className='font-semibold text-center my-7'>Profile</h1>
     <form className='flex flex-col gap-2' >
+        <input type="file" accept='image/*' onChange={handleProfilePic} />
     <div className='self-center w-32 h-32 overflow-hidden rounded-full shadow-md cursor-pointer'>
         <img src={currentUser.profilePic} alt="userPic" 
-        className='object-cover h-full border-2 border-purple-400 rounded-full dark:border-pink-500'/>
+        className='object-cover h-full border-4 rounded-full dark:border-orange-600 border-sky-500'/>
     </div>
     <Label className='mt-3 text-sm'>Full Name</Label>
     <TextInput type='text' id='name' placeholder='Full Name' className='input' value={""} />
