@@ -10,13 +10,13 @@ async function getToken(user) {
 }
 
 async function verifyToken(req, res, next) {
-    const token = req.headers.authorization 
-    // && req.headers.authorization.split(' ')[1];
-    console.log(token);
+    const authHeader = req.headers.authorization;
 
-    if (!token) {
+    if (!authHeader || !authHeader.startsWith('Bearer ')) {
         return res.status(httpStatusCode.UNAUTHORIZED).json({ success: false, message: 'Unauthorized: Token not provided' });
     }
+
+    const token = authHeader.split(' ')[1];
 
     try {
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
@@ -27,6 +27,7 @@ async function verifyToken(req, res, next) {
         return res.status(httpStatusCode.UNAUTHORIZED).json({ success: false, message: 'Unauthorized: Invalid token' });
     }
 }
+
 
 module.exports = {
     getToken,
