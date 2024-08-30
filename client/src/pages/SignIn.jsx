@@ -37,10 +37,12 @@ function SignIn() {
       const data = await res.json();
       if (data.success === false) {
        dispatch( signinFailure(data.message));
+      
        
       }
       
       if (res.ok) {
+        localStorage.setItem("token",data.data.token);
         dispatch(signinSuccess(data));
         navigate('/');
       }

@@ -26,8 +26,9 @@ function OAuth() {
         }),
       });
       const data = await res.json();
-      if (res.ok) {
-        dispatch(signinSuccess(data.data.user));
+      if (res.status === 200) {
+        localStorage.setItem("token", data.data.token);
+        dispatch(signinSuccess(data));
         navigate("/");
       } else {
         console.error("Server error:", data.message);

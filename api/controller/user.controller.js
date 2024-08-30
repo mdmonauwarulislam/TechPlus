@@ -1,5 +1,6 @@
 const bcryptjs = require("bcryptjs");
 const User = require("../models/users.model");
+const httpStatusCode = require("../constant/constant");
 
 
 const test = (req, res) => {
@@ -7,42 +8,60 @@ const test = (req, res) => {
 }
 
 const updateUser = async (req, res) => {
-    console.log(req.user);
-
     try {
         const { userId } = req.params;
-        const { name, email, password, profilePic } = req.body;
+        const { username, email, profilePic } = req.body;
+        console.log("userId :", userId);
+        console.log("username :", username);
+        console.log(req.body);
+        
+        
 
-        // Validation for the username
-        if (name) {
-            const nameRegex = /^[a-z]{5,20}$/;
-            if (!nameRegex.test(name)) {
-                return res.status(httpStatusCode.BAD_REQUEST).json({
-                    success: false,
-                    message: "Username must be lowercase, contain no special characters, and be between 5 to 20 letters.",
-                });
-            }
-        }
+    //    if(password){
+    //     if(password.length < 6){
+    //         return res.status(httpStatusCode.BAD_REQUEST).json({
+    //             success: false,
+    //             message: "Password must be at least 6 characters!",
+    //         });
+    //     }
+    //     password = bcryptjs.hashSync(password, 10);
+    //    }
 
-        // Validation for the password
-        if (password && password.length < 8) {
-            return res.status(httpStatusCode.BAD_REQUEST).json({
-                success: false,
-                message: "Password must be at least 8 characters long.",
-            });
-        }
+    //    if(username){
+    //     if(username.length < 6){
+    //         return res.status(httpStatusCode.BAD_REQUEST).json({
+    //             success: false,
+    //             message: "Username must be at least 3 characters!",
+    //         });
+    //     }
+    //     if(username.includes(" ")){
+    //         return res.status(httpStatusCode.BAD_REQUEST).json({
+    //             success: false,
+    //             message: "Username must not contain spaces!",
+    //         });
+    //     }
+    //     if(username !== username.toLowerCase()){
+    //         return res.status(httpStatusCode.BAD_REQUEST).json({
+    //             success: false,
+    //             message: "Username must be in lowercase!",
+    //         });
+    //     }
+    //     if(username !== username.replace(/[^a-zA-Z0-9]/g, "")){
+    //         return res.status(httpStatusCode.BAD_REQUEST).json({
+    //             success: false,
+    //             message: "Username must not contain special characters!",
+    //         });
+    //     }
+    //    }
 
-        // Prepare the update object
-        const updateData = {};
-        if (name) updateData.name = name;
-        if (email) updateData.email = email;
-        if (password) updateData.password = bcryptjs.hashSync(password, 10);
-        if (profilePic) updateData.profilePic = profilePic;
+        const updatedUser = await User.findByIdAndUpdate(userId, {
+            username,
+            email,
+            profilePic,
+        }, {new: true});
+        
 
-        // Find and update the user
-        let user = await User.findByIdAndUpdate(userId, updateData, { new: true });
-
-        if (!user) {
+        if (!updatedUser) {
             return res.status(httpStatusCode.NOT_FOUND).json({
                 success: false,
                 message: "User not found!",
@@ -52,7 +71,7 @@ const updateUser = async (req, res) => {
         return res.status(httpStatusCode.OK).json({
             success: true,
             message: "User updated successfully!",
-            data: user,
+            data: {user:updatedUser},
         });
     } catch (error) {
         console.error("Update user error:", error);

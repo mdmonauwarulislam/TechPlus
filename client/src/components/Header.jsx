@@ -38,12 +38,12 @@ function Header() {
             label={
                 <Avatar
                 alter = "user"
-                img={currentUser.profilePic}
+                img={currentUser.data.user.profilePic}
                 rounded
                 />
             }>
                 <DropdownHeader>
-                    <span className='block text-sm'>@{currentUser.username}</span>
+                    <span className='block text-sm'>@{currentUser.data.user.username}</span>
                 </DropdownHeader>
                 <Link to ={'/dashboard?tab=profile'}>
                 <DropdownItem>

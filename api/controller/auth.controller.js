@@ -66,7 +66,9 @@ const signin = async (req, res) => {
 
         if (isMatch) {
             const token = await getToken(user);
-            res.cookie("token", token);
+            console.log("Token:", token);
+    
+            res.cookie("token", token, { httpOnly: true });
             return res.status(httpStatusCode.OK).json({
                 success: true,
                 message: "Successfully logged in!",
